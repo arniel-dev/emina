@@ -1,18 +1,19 @@
 import React, { useState } from "react";
+import Header from "./components/Header";
 import AnimeList from "./pages/AnimeList";
+import useDebounce from "./hooks/useDebounce";
 
 const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   return (
     <div className="app">
-      <h1>Anime Movie App</h1>
-      <input
-        type="text"
-        placeholder="Search for anime..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <AnimeList searchQuery={searchQuery} />
+      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+
+      <main>
+        <AnimeList searchQuery={debouncedSearchQuery} />
+      </main>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { Anime } from "../types/anime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-
+import { numberWithCommas } from "../utils/utils";
 interface AnimeCardProps {
   anime: Anime;
 }
@@ -17,28 +17,23 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
 
       {/* Content */}
       <div className="anime-card-content">
-        {/* Status and Episodes */}
-        <div className="anime-card-status">
-          {/* Title */}
-          <h3>{anime.title}</h3>
-          <p>
-            <strong>{anime.status || "N/A"}</strong>
-          </p>
-          <span>{anime.episodes} episodes</span>
-        </div>
+        {/* Title */}
+        <h3>{anime.title}</h3>
 
         {/* Score and Ranking */}
         <div className="anime-card-score-ranking">
           <div className="score">
             <FontAwesomeIcon className="star-icon" icon={faStar} />
-
             <span>{anime.score || "N/A"}</span>
           </div>
           <div className="ranking">
-            <span>Rank #: {anime.rank || "N/A"}</span>
+            <span>rank#</span>
+            <span>{numberWithCommas(anime?.rank) || "N/A"}</span>
           </div>
         </div>
-
+        <div className="user-count">
+          <span>{numberWithCommas(anime?.scored_by) || "N/A"} users</span>
+        </div>
         {/* Genres */}
         <div className="anime-card-genres">
           {anime.genres.map((genre, index) => (
